@@ -34,4 +34,5 @@ Servers/
 .idea
 *.iml
 
-logs/
+logs/*
+!logs/.gitkeep

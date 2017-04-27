@@ -12,3 +12,26 @@ gradle-app.setting
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
+
+# Package Files #
+*.jar
+*.war
+*.ear
+/bin
+/build
+
+# Eclipse Files #
+.classpath
+.project
+.settings/
+/target/
+.springBeans
+.metadata
+Servers/
+.recommenders/
+
+# IntelliJ Files #
+.idea
+*.iml
+
+logs/

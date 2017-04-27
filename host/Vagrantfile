@@ -1,0 +1,47 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Specify Vagrant version and Vagrant API version
+Vagrant.require_version ">= 1.6.0"
+VAGRANTFILE_API_VERSION = "2"
+
+# Create and configure the VM(s)
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = 2048
+  end
+
+  config.vm.synced_folder "../logs", "/var/log"
+
+  # Assign a friendly name to this host VM
+  config.vm.hostname = "docker-host"
+  config.vm.define "docker-host"
+
+  # Check for an updated Vagrant box
+  config.vm.box_check_update = true
+
+  # Always use Vagrant's default insecure key
+  config.ssh.insert_key = false
+
+  # Spin up a "host box" for use with the Docker provider
+  # and then provision it with Docker
+  config.vm.box = "ubuntu/trusty64"
+  config.vm.provision "docker"
+
+  config.vm.provision "shell", inline:
+    "docker network create --driver bridge pizza"
+
+  # The following line terminates all ssh connections. Therefore
+  # Vagrant will be forced to reconnect.
+  # That's a workaround to have the docker command in the PATH
+  # without it, I run into this error:
+  # Command: "docker" "ps" "-a" "-q" "--no-trunc"
+  #
+  # Stderr: Get http:///var/run/docker.sock/v1.19/containers/json?all=1: dial unix /var/run/docker.sock: permission denied.
+  # Are you trying to connect to a TLS-enabled daemon without TLS?
+  config.vm.provision "shell", inline:
+    "ps aux | grep 'sshd:' | awk '{print $2}' | xargs kill"
+
+  config.vm.network :private_network, ip: "10.10.10.29"
+end

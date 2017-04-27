@@ -2,6 +2,8 @@
 
 This repository illustrates running multiple containers in a single host using Vagrant. The idea is that with just Vagrant and Virtualbox, a new developer could checkout this repo and run `vagrant up` and be ready to start contributing without having to mess with a ton of environment setup. What makes this project unique is that it simulates a more complicated architecture than just a straight up web server and database.
 
+View deck.pptx for more detailed information about this setup.
+
 ## Running the Application
 
 1. Install Vagrant: https://www.vagrantup.com/downloads.html

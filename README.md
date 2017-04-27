@@ -28,7 +28,7 @@ The following "happy path" workflow demonstrates the available APIs and their us
   message: <String>,
   isError: <true|false>,
   error: <Java Exception Object> (only present if isError is true),
-  itemType: <String> (what object type is returned...always Order in this example),
+  itemType: <String> (what object type is returned. In this example usually Order or Long),
   item: <JSON of instance of type returned> (only present for single object actions),
   items: <Array of item instances> (only present for list actions)
 }

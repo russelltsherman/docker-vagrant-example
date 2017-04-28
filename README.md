@@ -9,7 +9,7 @@ View deck.pptx for more detailed information about this setup.
 1. Install Vagrant: https://www.vagrantup.com/downloads.html
 1. Install Virtualbox: https://www.virtualbox.org/wiki/Downloads
 1. Checkout this repo
-1. To run: `vagrant up --no-parallel` (Note the --no-parallel flag is avoid a race condition while multiple gradle projects build simultaneously. Not needed usually after the first deploy)
+1. To run: `vagrant up --no-parallel` (Note the --no-parallel flag is to avoid a race condition while multiple gradle projects build simultaneously. Not needed usually after the first deploy)
 
 ### Services that are deployed
 

@@ -1,0 +1,3 @@
+include ':order', ':kitchen', ':delivery', ':common', ':common-data'
+project(':common').projectDir = new File(settingsDir, 'common')
+project(':common-data').projectDir = new File(settingsDir, 'common-data')

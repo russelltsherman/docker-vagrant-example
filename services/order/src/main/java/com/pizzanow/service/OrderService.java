@@ -1,32 +1,31 @@
 package com.pizzanow.service;
 
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import com.pizzanow.config.MessagingConfig;
-import com.pizzanow.model.Order;
+import com.pizzanow.model.CrudOrder;
 import com.pizzanow.repository.OrderRepository;
 
 @Service
-public class OrderService extends BaseService<Order> {
+public class OrderService extends BaseService<CrudOrder> {
 
 	@Autowired
 	protected OrderRepository orderRepo;
 	
 	@Autowired
-	protected RabbitTemplate rabbitTemplate;
+	protected OrderMessagingService orderMessagingService;
 	
 	@Override
-	protected CrudRepository<Order, Long> getRepository() {
+	protected CrudRepository<CrudOrder, Long> getRepository() {
 		return orderRepo;
 	}
 
 	@Override
-	public Order create(Order order) {
-		Order o = super.create(order);
-		rabbitTemplate.convertAndSend(MessagingConfig.KitchenQueueName, o);
+	public CrudOrder create(CrudOrder order) {
+		CrudOrder o = super.create(order);
+		orderMessagingService.push(MessagingConfig.KitchenQueueName, o);
 		return o;
 	}
 }

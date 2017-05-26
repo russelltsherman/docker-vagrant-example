@@ -25,8 +25,11 @@ repositories {
 dependencies {
 	compile("com.h2database:h2")
 	compile('org.springframework.boot:spring-boot-starter-web')
-	compile("org.springframework.boot:spring-boot-starter-data-jpa")
 	compile("org.springframework.boot:spring-boot-starter-amqp")
 	compile('com.google.guava:guava:19.0')
+	compile("com.fasterxml.jackson.module:jackson-module-mrbean")
+	// Requires IDE Plugin from https://projectlombok.org/download.html
+	compile 'org.projectlombok:lombok'
+	testCompile("junit:junit")
 }
 

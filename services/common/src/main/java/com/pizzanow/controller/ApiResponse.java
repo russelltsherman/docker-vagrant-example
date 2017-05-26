@@ -41,11 +41,12 @@ public class ApiResponse<T> {
 	
 	@JsonGetter("itemType")
 	public String itemType() {
+		String className = null;
 		if (item != null) {
-			return item.getClass().getSimpleName();
+			className = item.getClass().getSimpleName();
 		} else if (!CollectionUtils.isEmpty(items)) {
-			return items.get(0).getClass().getSimpleName();
+			className = items.get(0).getClass().getSimpleName();
 		}
-		return null;
+		return className == null ? null : className.replaceAll("^Crud|Impl$", "");
 	}
 }

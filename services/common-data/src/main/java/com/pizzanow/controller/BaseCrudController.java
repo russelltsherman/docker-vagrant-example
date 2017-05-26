@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.common.collect.Lists;
-import com.pizzanow.model.BaseEntity;
+import com.pizzanow.model.Entity;
 import com.pizzanow.service.BaseService;
 
-public abstract class BaseCrudController<T extends BaseEntity> extends BaseController {
+public abstract class BaseCrudController<T extends Entity> extends BaseController {
 
 	protected abstract BaseService<T> getService();
 	

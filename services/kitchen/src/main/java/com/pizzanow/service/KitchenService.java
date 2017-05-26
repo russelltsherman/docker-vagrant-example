@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.Queue;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +13,13 @@ import com.pizzanow.client.OrderRestClient;
 import com.pizzanow.config.MessagingConfig;
 import com.pizzanow.enums.OrderStatus;
 import com.pizzanow.model.Order;
+import com.pizzanow.util.JsonUtil;
 
 @Service
 public class KitchenService implements QueueHandler<Order> {
 	
 	@Autowired
-	protected RabbitTemplate rabbitTemplate;
+	protected OrderMessagingService orderMessagingService;
 	
 	@Autowired
 	protected OrderRestClient restClient;
@@ -28,8 +28,8 @@ public class KitchenService implements QueueHandler<Order> {
 	protected Map<Long, Order> bakingQueue = Maps.newConcurrentMap();
 
 	@RabbitListener(queues = MessagingConfig.KitchenQueueName)
-    public void receiveOrder(final Order order) {
-        orderQueue.add(order);
+	public void receive(final String orderJson) {
+		orderQueue.add(JsonUtil.parseAsOrder(orderJson));
     }
 	
 	public Long pendingSize() {
@@ -50,6 +50,6 @@ public class KitchenService implements QueueHandler<Order> {
 		Order order = bakingQueue.remove(id);
 		order.setOrderStatus(OrderStatus.Baked);
 		restClient.update(id, order);
-		rabbitTemplate.convertAndSend(MessagingConfig.DeliveryQueueName, order);
+		orderMessagingService.push(MessagingConfig.DeliveryQueueName, order);
 	}
 }

@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 import com.google.common.collect.Lists;
-import com.pizzanow.model.BaseEntity;
+import com.pizzanow.model.Entity;
 
-public abstract class BaseService<T extends BaseEntity> {
+public abstract class BaseService<T extends Entity> {
 	
 	protected abstract CrudRepository<T, Long> getRepository();
 	

@@ -23,5 +23,5 @@ repositories {
 
 
 dependencies {
-	compile project(":Common")
+	compile project(":common")
 }

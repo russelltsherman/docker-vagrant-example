@@ -23,6 +23,6 @@ repositories {
 
 
 dependencies {
-	compile project(":common-data")
-	compile("org.springframework.boot:spring-boot-starter-data-jpa")
+	compile project(":common")
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 }

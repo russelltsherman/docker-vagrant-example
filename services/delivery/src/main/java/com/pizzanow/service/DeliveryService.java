@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.Queue;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +13,10 @@ import com.pizzanow.client.OrderRestClient;
 import com.pizzanow.config.MessagingConfig;
 import com.pizzanow.enums.OrderStatus;
 import com.pizzanow.model.Order;
+import com.pizzanow.util.JsonUtil;
 
 @Service
 public class DeliveryService implements QueueHandler<Order> {
-	
-	@Autowired
-	protected RabbitTemplate rabbitTemplate;
 	
 	@Autowired
 	protected OrderRestClient restClient;
@@ -28,8 +25,8 @@ public class DeliveryService implements QueueHandler<Order> {
 	protected Map<Long, Order> deliveryQueue = Maps.newConcurrentMap();
 
 	@RabbitListener(queues = MessagingConfig.DeliveryQueueName)
-    public void receiveOrder(final Order order) {
-        orderQueue.add(order);
+    public void receive(final String orderJson) {
+        orderQueue.add(JsonUtil.parseAsOrder(orderJson));
     }
 	
 	public Long pendingSize() {

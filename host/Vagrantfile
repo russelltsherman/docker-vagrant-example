@@ -1,6 +1,15 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+
+$network = <<SCRIPT
+# Attempting to create a network a second time throws an error
+if [[ $(docker network ls | grep pizza | wc -l) -eq 0 ]]
+then
+      docker network create --driver bridge pizza
+fi
+SCRIPT
+
 # Specify Vagrant version and Vagrant API version
 Vagrant.require_version ">= 1.6.0"
 VAGRANTFILE_API_VERSION = "2"
@@ -29,8 +38,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
   config.vm.provision "docker"
 
-  config.vm.provision "shell", inline:
-    "docker network create --driver bridge pizza"
+  # Create the custom network for our containers to use
+  config.vm.provision :shell, inline: $network
 
   # The following line terminates all ssh connections. Therefore
   # Vagrant will be forced to reconnect.

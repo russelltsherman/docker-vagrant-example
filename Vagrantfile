@@ -67,9 +67,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # Specify the Docker image to use
       docker.build_dir = "services/order/"
 
-      # Specify port mappings
+      # Specify port mappings for debug
       # If omitted, no ports are mapped!
-      #docker.ports = ['8080:8080']
+      docker.ports = ['5000:5000']
 
       # Specify a friendly name for the Docker container
       docker.name = 'order'
@@ -96,9 +96,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # Specify the Docker image to use
       docker.build_dir = "services/kitchen/"
 
-      # Specify port mappings
+      # Specify port mappings for debug
       # If omitted, no ports are mapped!
-      #docker.ports = ['8080:8080']
+      docker.ports = ['5001:5001']
 
       # Specify a friendly name for the Docker container
       docker.name = 'kitchen'
@@ -125,9 +125,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # Specify the Docker image to use
       docker.build_dir = "services/delivery/"
 
-      # Specify port mappings
+      # Specify port mappings for debug
       # If omitted, no ports are mapped!
-      #docker.ports = ['8080:8080']
+      docker.ports = ['5002:5002']
 
       # Specify a friendly name for the Docker container
       docker.name = 'delivery'
